@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 esn89's Arch + bspwm
 ====================
 
@@ -68,3 +69,7 @@ Script available
 Script available
 [here](https://github.com/esn89/dotfiles/blob/master/bspwm/.barScripts/brightnessScript)
 
+=======
+# dotfiles
+My botfiles.
+>>>>>>> 28be0a746dd844edae7b6e6e56bf1f8f3f7edd2d
