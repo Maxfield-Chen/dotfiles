@@ -1,333 +1,312 @@
-if has("syntax")
-	syntax on
-endif
+set nocompatible              " be iMproved, required
+filetype off                  " required
 
+" set the runtime path to include Vundle and initialize
+  set rtp+=~/.vim/bundle/Vundle.vim/
+  let path='~/vimfiles/bundle'
+  call vundle#begin(path)
+
+" let Vundle manage Vundle, required
+
+  Bundle 'matze/vim-move'
+
+  Bundle 'suan/vim-instant-markdown'
+
+  Bundle 'godlygeek/tabular'
+
+  Bundle 'eagletmt/ghcmod-vim'
+
+  Bundle 'eagletmt/neco-ghc'
+
+  Plugin 'jeffkreeftmeijer/vim-numbertoggle'
+
+  Plugin 'chriskempson/base16-vim'
+
+  Plugin 'scrooloose/syntastic'
+
+  Plugin 'fatih/vim-go'
+
+  Plugin 'Valloric/YouCompleteMe'
+
+  Plugin 'gmarik/Vundle.vim'
+
+  Plugin 'scrooloose/nerdtree'
+
+  Plugin 'flazz/vim-colorschemes'
+
+  Plugin 'majutsushi/tagbar'
+
+  Plugin 'Raimondi/delimitMate'
+
+" All off these are for snipmate
+  Plugin 'garbas/vim-snipmate'
+
+  Plugin 'MarcWeber/vim-addon-mw-utils'
+
+  Plugin 'tomtom/tlib_vim'
+
+  Plugin 'honza/vim-snippets'
+
+" -----------------------------------------------------------
+"
+" All of your Plugins must be added before the following line
+  call vundle#end()            " required
+  filetype plugin indent on    " required
+
+" To ignore plugin indent changes, instead use:
+" filetype plugin on
+"
+" Brief help
+" :PluginList       - lists configured plugins
+" :PluginInstall    - installs plugins; append `!` to update or just :PluginUpdate
+" :PluginSearch foo - searches for foo; append `!` to refresh local cache
+" :PluginClean      - confirms removal of unused plugins; append `!` to auto-approve removal
+"
+" see :h vundle for more details or wiki for FAQ
+" Put your non-Plugin stuff after this line
+"
+"------------------------------------------------------------
+" Features {{{1
+"
+" These options and commands enable some very useful features in Vim, that
+" no user should have to live without.
+
+" Set 'nocompatible' to ward off unexpected things that your distro might
+" have made, as well as sanely reset options when re-sourcing .vimrc
 set nocompatible
-filetype off
-syntax on
 
-call plug#begin('~/.vim/plugged')
-Plug 'scrooloose/syntastic'
-Plug 'itchyny/lightline.vim'
-Plug 'Valloric/YouCompleteMe'
-Plug 'klen/python-mode'
-"Plug 'w0ng/vim-hybrid'
-"Plug 'chriskempson/vim-tomorrow-theme'
-"Plug 'romainl/Apprentice'
-Plug 'baskerville/bubblegum'
-"Plug 'mattsacks/vim-eddie'
-Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': 'yes \| ./install' }
-Plug 'junegunn/fzf.vim'
-Plug 'tpope/vim-surround'
-"Plug 'ctrlpvim/ctrlp.vim', { 'on': 'CtrlP' }
-call plug#end()
+" Attempt to determine the type of a file based on its name and possibly its
+" contents. Use this to allow intelligent auto-indenting for each filetype,
+" and for plugins that are filetype specific.
+filetype indent plugin on
 
-filetype plugin indent on
-set modelines=0
+" Enable syntax highlighting
+syntax enable
 
-" Follow the leader
-let mapleader = "\<Space>"
 
-" Turns on line numbers "
-set number
-set laststatus=2
-set t_Co=256
-set encoding=utf-8
+"------------------------------------------------------------
+" Must have options {{{1
+"
+" These are highly recommended options.
 
-" Select theme
-"colorscheme lucius
-"LuciusBlack
-colorscheme bubblegum-256-dark
+" Vim with default settings does not allow easy switching between multiple files
+" in the same editor window. Users can use multiple split windows or multiple
+" tab pages to edit multiple files, but it is still best to enable an option to
+" allow easier switching between files.
+"
+" One such option is the 'hidden' option, which allows you to re-use the same
+" window and switch from an unsaved buffer without saving it first. Also allows
+" you to keep an undo history for multiple files when re-using the same window
+" in this way. Note that using persistent undo also lets you undo in multiple
+" files even in the same window, but is less efficient and is actually designed
+" for keeping undo history after closing Vim entirely. Vim will complain if you
+" try to quit without saving, and swap files will keep you safe if your computer
+" crashes.
+set hidden
 
-" Folds
-set foldmethod=indent
-set foldnestmax=10
-set nofoldenable
-set foldlevel=1
-set foldnestmax=1
+" Note that not everyone likes working this way (with the hidden option).
+" Alternatives include using tabs or split windows instead of re-using the same
+" window as mentioned above, and/or either of the following options:
+" set confirm
+" set autowriteall
 
-" My default indentation settings "
-set tabstop=8
-set shiftwidth=8
-set softtabstop=8
-set noexpandtab
-set cindent
-set autoindent
-set smartindent
+" Better command-line completion
+set wildmenu
 
-""TURNS OFF F1 AS HELP KEY"""""
-inoremap <F1> <ESC>
-nnoremap <F1> <ESC>
-vnoremap <F1> <ESC>
+" Show partial commands in the last line of the screen
+set showcmd
 
-" No annoying sound on errors:  "
-set noerrorbells
+" Highlight searches (use <C-L> to temporarily turn off highlighting; see the
+" mapping of <C-L> below)
+set hlsearch
 
-" No annoying visual errors either "
-set novisualbell
+"Ignore bullshit files
+set wildignore+=*\\tmp\\*,*.swp,*.swo,*.zip,.git,.cabal-sandbox
 
-" Wraps words that are too long
-" Want word wrapping, but only want line breaks inserted when you explicitly press the Enter key:
-set wrap
-set linebreak
-set nolist
+" Modelines have historically been a source of security vulnerabilities. As
+" such, it may be a good idea to disable them and use the securemodelines
+" script, <http://www.vim.org/scripts/script.php?script_id=1876>.
+" set nomodeline
 
-" Searching"
-set ignorecase  "case insensitive
 
-" Sets F3 to cancel the highlighting "
-nnoremap <Leader>h :set hlsearch!<CR>
+"------------------------------------------------------------
+" Usability options {{{1
+"
+" These are options that users frequently set in their .vimrc. Some of them
+" change Vim's behaviour in ways which deviate from the true Vi way, but
+" which are considered to add usability. Which, if any, of these options to
+" use is very much a personal preference, but they are harmless.
 
-" Do smart case matching
+" Use case insensitive search, except when using capital letters
+set ignorecase
 set smartcase
 
-" Sets the paste togle button to F2
-set pastetoggle=<Leader>a
+" Allow backspacing over autoindent, line breaks and start of insert action
+set backspace=indent,eol,start
 
-" Uncomment the following to have Vim jump to the last position when
-" reopening a file
-if has("autocmd")
-	au BufReadPost * if line("'\"") > 1 && line("'\"") <= line("$") | exe "normal! g'\"" | endif
-endif
+" When opening a new line and no filetype-specific indenting is enabled, keep
+" the same indent as the line you're currently on. Useful for READMEs, etc.
+set autoindent
 
-" Automatically remove trailing white space
-autocmd BufRead,BufWrite * if ! &bin | silent! %s/\s\+$//ge | endif
+" Stop certain movements from always going to the first character of a line.
+" While this behaviour deviates from that of Vi, it does what most users
+" coming from other editors would expect.
+set nostartofline
 
+" Display the cursor position on the last line of the screen or in the status
+" line of a window
+set ruler
 
-" --- Lightline settings ---
-let g:lightline = {
-			\ 'colorscheme': 'Tomorrow',
-			\ 'active': {
-			\   'right': [ [ 'syntastic', 'lineinfo' ], ['percent'], [ 'fileformat', 'fileencoding', 'filetype' ] ]
-			\ },
-			\ 'component': {
-			\   'readonly': '%{&readonly?"⭤":""}',
-			\ },
-			\ 'component_function': {
-			\   'ctrlpmark': 'CtrlPMark',
-			\ },
-			\ 'component_expand': {
-			\   'syntastic': 'SyntasticStatuslineFlag',
-			\ },
-			\ 'component_type': {
-			\   'syntastic': 'error',
-			\ }
-			\ }
+" Always display the status line, even if only one window is displayed
+set laststatus=2
 
-augroup AutoSyntastic
-	autocmd!
-	autocmd BufWritePost * call s:syntastic()
-augroup END
-function! s:syntastic()
-	SyntasticCheck
-	call lightline#update()
-endfunction
+" Instead of failing a command because of unsaved changes, instead raise a
+" dialogue asking if you wish to save changed files.
+set confirm
 
-" Stop YCM from opening scratchpad:
-set completeopt=menu,menuone
-" Allow syntastic to jump between different errors
-"let g:syntastic_python_python_exec = '/usr/bin/python2.7'
-"let g:syntastic_python_checkers = ['flake8']
-"let g:syntastic_python_flake8_args="--ignore=E501,W601"
-"let g:syntastic_python_checker_args='--ignore=E501,E225'
-let g:syntastic_always_populate_loc_list=1
-let g:syntastic_error_symbol="✗"
-let g:syntastic_warning_symbol="⚠"
-let g:syntastic_style_warning_symbol="⚑"
-let g:syntastic_style_error_symbol="⚑"
-let g:syntastc_enable_signs=1
-let g:syntastic_ignore_files = ['\.py$']
-highlight SyntasticErrorSign ctermfg=161 ctermbg=255
-highlight SyntasticWarningSign ctermfg=220 ctermbg=255
-hi SpellBad ctermfg=040 ctermbg=255 guifg=#707880 guibg=#303030
-hi SpellCap ctermfg=057 ctermbg=255 guifg=#707880 guibg=#303030
-highlight link SyntasticError SpellBad
-highlight link SyntasticWarning SpellCap
+" Use visual bell instead of beeping when doing something wrong
+set visualbell
 
-" python-mode settings begin here:
-let g:pymode_syntax_space_errors = 0
-" let g:pymode = 0
-" let g:pymode_virtualenv = 1
-" let g:pymode_paths = []
-" let g:pymode_warnings = 1
-" let g:pymode_trim_whitespaces = 1
-" let g:pymode_indent = []
-let g:pymode_doc = 0
-let g:pymode_lint_cwindow = 0
+" And reset the terminal code for the visual bell. If visualbell is set, and
+" this line is also included, vim will neither flash nor beep. If visualbell
+" is unset, this does nothing.
+set t_vb=
 
-let g:pymode_lint_todo_symbol = '↳'
-let g:pymode_lint_comment_symbol = '⚑'
-let g:pymode_lint_visual_symbol = 'RR'
-let g:pymode_lint_error_symbol = '⚠'
-let g:pymode_lint_info_symbol = 'II'
-let g:pymode_lint_pyflakes_symbol = 'FF'
-
-" let g:pymode_lint = 1
-" let g:pymode_lint_on_write = 1
-" let g:pymode_lint_on_fly = 1
-" let g:pymode_lint_message = 1
-" let g:pymod_lint_checkers = ['pyflakes']
-
-" let g:pymode_rope = 0
-" let g:pymode_rope_completion = 0
-" let g:pymode_syntax = 1
-" let g:pymode_syntax_all = 1
-
-
-" Turn off the start up message
-set shortmess+=I
-
-" Turn off recording mode
-"nnoremap q <nop>
-
-" Hide the default mode text before the statusline
-set noshowmode
-
-" Change the : into ; so you don't have to press shift
-nnoremap ; :
-
-" Allows me to do :Q! as well as :q
-command -bang Q quit<bang>
-
-" Change the backspace so it acts as it should
-set backspace=eol,start,indent
-set ft=c
-set fo+=c
-set tw=60
-
-" Set Java file type properties:
-autocmd Filetype java setlocal ts=4 sts=4 sw=4 noexpandtab
-
-" Set cpp type properties:
-autocmd Filetype cpp setlocal ts=8 sts=8 sw=8
-
-" Set python file type properties:
-autocmd Filetype python setlocal ts=4 sts=4 sw=4 textwidth=80 smarttab expandtab smartindent cinwords=if,elif,else,for,while,try,except,finally,def,class
-
-" Set c file type properties:
-autocmd Filetype c setlocal ts=8 sts=8 sw=8 textwidth=80 smarttab noexpandtab
-
-" No Swap files
-set noswapfile
-
-let g:ycm_global_ycm_extra_conf = '/home/ep/.ycm_extra_conf.py'
-let g:ycm_server_keep_logfiles = 1
-let g:ycm_server_log_level = 'debug'
-let g:ycm_path_to_python_interpreter = '/usr/bin/python2.7'
-let g:ycm_confirm_extra_conf = 0
-let g:ycm_echo_current_diagnostic = 1
-nnoremap <Leader>f :YcmCompleter FixIt<CR>
-
-" Mouse settings
+" Enable use of the mouse for all modes
 set mouse=a
-map <ScrollWheelUp> <C-Y>
-map <ScrollWheelDown> <C-E>
 
-" Function to pull lines from other files
-function! s:GetFromFile(...)
-	execute 'r! sed -n '. a:1 .','. a:2 .'p '. a:3
-endf
-command -nargs=+ -complete=file GetFromFile call s:GetFromFile(<f-args>)
+" Set the command window height to 2 lines, to avoid many cases of having to
+" "press <Enter> to continue"
+set cmdheight=2
 
-let g:loaded_matchparen=0
+" Display line numbers on the left
+set number
 
-set lazyredraw
-set ttyfast
-"set cursorline
+" Quickly time out on keycodes, but never time out on mappings
+set notimeout ttimeout ttimeoutlen=200
 
-" Easier Split Navigation
-nnoremap <C-J> <C-W><C-J>
-nnoremap <C-K> <C-W><C-K>
-nnoremap <C-L> <C-W><C-L>
-nnoremap <C-H> <C-W><C-H>
-set splitbelow
-set splitright
+" Set up folding automatically
+set foldmethod=indent
+set foldlevel=1
+set foldclose=all
+set foldnestmax=1
 
+"Correctly set font size and style
+set gfn=Envy_Code_R:h8:cANSI
 
-nnoremap <Leader>o :Locate /home/ep/<CR>
-nnoremap <Leader>w :w<CR>
-nnoremap <Leader>l :ll<CR>
-nnoremap <Leader>j :lnext<CR>
-nnoremap <Leader>k :lprevious<CR>
-nnoremap <Leader>v :PlugUpdate<CR>
+" Use <F11> to toggle between 'paste' and 'nopaste'
+"set pastetoggle=<F11>
 
-" Copy & paste to & from system clipboard with <Space>y &
-" <Space>p (must compile vim with +xclipboard)
-vmap <Leader>y "+y
-vmap <Leader>d "+d
-nmap <Leader>p "+p
-nmap <Leader>P "+P
-vmap <Leader>p "+p
-vmap <Leader>P "+P
+" Start at Home Directory
+cd ~
 
-" Automatically jump to the end of the text you pasted:
-vnoremap <silent> y y`]
-vnoremap <silent> p p`]
-nnoremap <silent> p p`]
+" cdd changes to current directory
+nnoremap cdd :cd %:p:h<CR>:pwd<CR>
 
-" Go to line number without having to shift+g
-nnoremap <CR> G
-nnoremap <BS> gg
+" using space as leader key
+let mapleader = "\<Space>"
 
-
-" Tells ctrlp to persist the cache in the location
-" so it will read from there and load the cache
-"let g:ctrlp_cache_dir = $HOME . '/.cache/ctrlp'
+"------------------------------------------------------------
+" Indentation options {{{1
 "
-" Let CtrlP show hidden files:
-"let g:ctrlp_show_hidden = 1
+" Indentation settings according to personal preference.
 
-" Do not clear the cache on exit please and thank you
-"let g:ctrlp_clear_cache_on_exit=0
+" Indentation settings for using 2 spaces instead of tabs.
+" Do not change 'tabstop' from its default value of 8 with this setup.
+set shiftwidth=2
+set softtabstop=2
+set expandtab
 
-"let g:ctrlp_mruf_max=100
+" Indentation settings for using hard tabs for indent. Display tabs as
+" two characters wide.
+"set shiftwidth=2
+"set tabstop=2
 
-"set wildignore+=*/tmp/*,*.so,*.swp,*.zip
-"let g:ctrlp_custom_ignore = '\v[\/]\.(aptitude|cache|compiled|dbus|fonts|frozenwasteland|gconf|gimp-2.8|gnome|gnupg|gstreamer-0.10|local|lyrics|mozilla|oh-my-zsh|pki|PlayOnLinux|puddletag|qws|ssh|steam|terminfo|thumbnails|wine)$'
 
+"------------------------------------------------------------
+" Mappings {{{1
+"
+" Useful mappings
+" Map save to space w
+nnoremap <Leader>w :w<CR>
 
-""" Uses <Leader>u for commenting blocks of code
-""" The entire chunk from 291 - 311 does that"
-nnoremap <Leader>u :<c-u>.,.+<c-r>=v:count<cr>call <SID>toggleComment()<cr>
-nnoremap <Leader>u :<c-u>set opfunc=<SID>commentOp<cr>g@
-xnoremap <Leader>u :call <SID>toggleComment()<cr>
+" Map Y to act like D and C, i.e. to yank until EOL, rather than act as yy,
+" which is the default
+map Y y$
 
-function! s:commentOp(...)
-  '[,']call s:toggleComment()
-endfunction
+" Map <C-L> (redraw screen) to also turn off search highlighting until the
+" next search
+nnoremap <C-L> :nohl<CR><C-L>
 
-function! s:toggleComment() range
-  let comment = substitute(get(b:, 'commentstring', &commentstring), '\s*\(%s\)\s*', '%s', '')
-  let pattern = '\V' . printf(escape(comment, '\'), '\(\s\{-}\)\s\(\S\.\{-}\)\s\=')
-  let replace = '\1\2'
-  if getline('.') !~ pattern
-    let indent = matchstr(getline('.'), '^\s*')
-    let pattern = '^' . indent . '\zs\(\s*\)\(\S.*\)'
-    let replace = printf(comment, '\1 \2' . (comment =~ '%s$' ? '' : ' '))
-  endif
-  for lnum in range(a:firstline, a:lastline)
-    call setline(lnum, substitute(getline(lnum), pattern, replace, ''))
-  endfor
-endfunction
-"""
+"I just prefer c-t instead of c-w to move between splits
+nnoremap <C-T> <C-W>
+" now jk will pop me out of insert mode, essential 
+:imap jk <Esc>
 
-" Make the switch from modes have no delay
-set ttimeoutlen=0
+" This lets control v paste from clip board and Control c copy to clip board
+:nmap <C-V> "+p
+:nmap <C-C> "+y
 
-" Spaces out var=a to var = a
-" nnoremap <leader>= :s/\(\w\+\)=\(\w\+\)/\1 = \2/g<CR>
+" Toggle Tagbar
+:nmap <F8> :TagbarToggle
 
-" fzf.vim stuff:
+"ghc mod mappings
+map <silent> tw :GhcModTypeInsert<CR>
+map <silent> ts :GhcModSplitFunCase<CR>
+map <silent> tq :GhcModType<CR>
+map <silent> te :GhcModTypeClear<CR>
 
-" A Locate command
-command! -nargs=1 Locate call fzf#run(
-      \ {'source': 'locate <q-args>', 'sink': 'e', 'options': '-m'})
+"Tabularize mappings
+let g:haskell_tabular = 1
+let g:cpp_tabular = 1
 
-" Default fzf layout
-" " - down / up / left / right
-" " - window (nvim only)
-let g:fzf_layout = { 'down': '~40%' }
+vmap a= :Tabularize /=<CR>
+vmap a; :Tabularize /::<CR>
+vmap a- :Tabularize /-><CR>
 
-" Advanced customization usingutoload functions
-autocmd VimEnter * command! Colors
-  \ call fzf#vim#colors({'left': '15%', 'options': '--reverse --margin 30%,0'})
+"------------------------------------------------------------
+" Appearance {{{1
+set t_Co=256
+set guifont=Envy_Code_R:h9.55:cANSI
+
+"------------------------------------------------------------
+" Plugin Customization
+" Make indents turn on automatically
+  "au VimEnter * IndentGuidesEnable
+" Open nerdtree with Cntrl n
+map <C-n> :NERDTreeToggle<CR>
+" Auto Close Nerdtree on Open
+let NERDTreeQuitOnOpen=1
+"Include ycm extra conf
+let g:ycm_global_ycm_extra_conf                     = '~/vimfiles/bundle/YouCompleteMe/third_party/ycmd/cpp/ycm/.ycm_extra_conf.py'
+let g:ycm_autoclose_preview_window_after_completion = 1
+let g:ycm_autoclose_preview_window_after_insertion  = 1
+
+"Have vimgo use 2 spaces for my poor eyes
+set shiftwidth=2
+set tabstop=2
+"Set move key to ctrl
+let g:move_key_modifier = 'C'
+
+"Syntastic things
+set statusline+=%#warningmsg#
+set statusline+=%{SyntasticStatuslineFlag()}
+set statusline+=%*
+
+let g:syntastic_always_populate_loc_list = 1
+let g:syntastic_auto_loc_list            = 0
+let g:syntastic_check_on_open            = 0
+let g:syntastic_check_on_wq              = 0
+
+"Enable autocompletion through neco-ghc with ycm
+let g:ycm_semantic_triggers = {'haskell' : ['.']}
+
+"tab is bound already so make snipmate work with sx
+imap xs <esc>a<Plug>snipMateNextOrTrigger
+smap xs <Plug>snipMateNextOrTrigger
+"------------------------------------------------------------
+" Auto Reloading
+augroup reload_vimrc " {
+    autocmd!
+  augroup END " }
+    autocmd BufWritePost $MYVIMRC source $MYVIMRC
