@@ -239,7 +239,7 @@ map Y y$
 nnoremap <C-L> :nohl<CR><C-L>
 
 "I just prefer c-t instead of c-w to move between splits
-nnoremap <C-T> <C-W>
+nnoremap <C-a> <C-W>
 " now jk will pop me out of insert mode, essential 
 :imap jk <Esc>
 
