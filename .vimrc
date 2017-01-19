@@ -1,70 +1,6 @@
 set nocompatible              " be iMproved, required
 filetype off                  " required
 
-" set the runtime path to include Vundle and initialize
-  set rtp+=~/.vim/bundle/Vundle.vim/
-  let path='~/vimfiles/bundle'
-  call vundle#begin(path)
-
-" let Vundle manage Vundle, required
-
-  Bundle 'matze/vim-move'
-
-  Bundle 'suan/vim-instant-markdown'
-
-  Bundle 'godlygeek/tabular'
-
-  Bundle 'eagletmt/ghcmod-vim'
-
-  Bundle 'eagletmt/neco-ghc'
-
-  Plugin 'jeffkreeftmeijer/vim-numbertoggle'
-
-  Plugin 'chriskempson/base16-vim'
-
-  Plugin 'scrooloose/syntastic'
-
-  Plugin 'fatih/vim-go'
-
-  Plugin 'Valloric/YouCompleteMe'
-
-  Plugin 'gmarik/Vundle.vim'
-
-  Plugin 'scrooloose/nerdtree'
-
-  Plugin 'flazz/vim-colorschemes'
-
-  Plugin 'majutsushi/tagbar'
-
-  Plugin 'Raimondi/delimitMate'
-
-" All off these are for snipmate
-  Plugin 'garbas/vim-snipmate'
-
-  Plugin 'MarcWeber/vim-addon-mw-utils'
-
-  Plugin 'tomtom/tlib_vim'
-
-  Plugin 'honza/vim-snippets'
-
-" -----------------------------------------------------------
-"
-" All of your Plugins must be added before the following line
-  call vundle#end()            " required
-  filetype plugin indent on    " required
-
-" To ignore plugin indent changes, instead use:
-" filetype plugin on
-"
-" Brief help
-" :PluginList       - lists configured plugins
-" :PluginInstall    - installs plugins; append `!` to update or just :PluginUpdate
-" :PluginSearch foo - searches for foo; append `!` to refresh local cache
-" :PluginClean      - confirms removal of unused plugins; append `!` to auto-approve removal
-"
-" see :h vundle for more details or wiki for FAQ
-" Put your non-Plugin stuff after this line
-"
 "------------------------------------------------------------
 " Features {{{1
 "
@@ -247,63 +183,18 @@ nnoremap <C-a> <C-W>
 :nmap <C-V> "+p
 :nmap <C-C> "+y
 
-" Toggle Tagbar
-:nmap <F8> :TagbarToggle
-
-"ghc mod mappings
-map <silent> tw :GhcModTypeInsert<CR>
-map <silent> ts :GhcModSplitFunCase<CR>
-map <silent> tq :GhcModType<CR>
-map <silent> te :GhcModTypeClear<CR>
-
-"Tabularize mappings
-let g:haskell_tabular = 1
-let g:cpp_tabular = 1
-
-vmap a= :Tabularize /=<CR>
-vmap a; :Tabularize /::<CR>
-vmap a- :Tabularize /-><CR>
-
 "------------------------------------------------------------
 " Appearance {{{1
 set t_Co=256
 set guifont=Envy_Code_R:h9.55:cANSI
 
 "------------------------------------------------------------
-" Plugin Customization
-" Make indents turn on automatically
-  "au VimEnter * IndentGuidesEnable
-" Open nerdtree with Cntrl n
-map <C-n> :NERDTreeToggle<CR>
-" Auto Close Nerdtree on Open
-let NERDTreeQuitOnOpen=1
-"Include ycm extra conf
-let g:ycm_global_ycm_extra_conf                     = '~/vimfiles/bundle/YouCompleteMe/third_party/ycmd/cpp/ycm/.ycm_extra_conf.py'
-let g:ycm_autoclose_preview_window_after_completion = 1
-let g:ycm_autoclose_preview_window_after_insertion  = 1
-
 "Have vimgo use 2 spaces for my poor eyes
 set shiftwidth=2
 set tabstop=2
 "Set move key to ctrl
 let g:move_key_modifier = 'C'
 
-"Syntastic things
-set statusline+=%#warningmsg#
-set statusline+=%{SyntasticStatuslineFlag()}
-set statusline+=%*
-
-let g:syntastic_always_populate_loc_list = 1
-let g:syntastic_auto_loc_list            = 0
-let g:syntastic_check_on_open            = 0
-let g:syntastic_check_on_wq              = 0
-
-"Enable autocompletion through neco-ghc with ycm
-let g:ycm_semantic_triggers = {'haskell' : ['.']}
-
-"tab is bound already so make snipmate work with sx
-imap xs <esc>a<Plug>snipMateNextOrTrigger
-smap xs <Plug>snipMateNextOrTrigger
 "------------------------------------------------------------
 " Auto Reloading
 augroup reload_vimrc " {
