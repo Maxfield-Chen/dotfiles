@@ -172,7 +172,7 @@ map Y y$
 
 " Map <C-L> (redraw screen) to also turn off search highlighting until the
 " next search
-nnoremap <C-L> :nohl<CR><C-L>
+nnoremap <C-l> :nohl<CR><C-L>
 
 "I just prefer c-t instead of c-w to move between splits
 nnoremap <C-a> <C-W>
