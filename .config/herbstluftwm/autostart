@@ -1,0 +1,3 @@
+#!/bin/sh
+
+python /home/nihliphobe/.config/herbstluftwm/autostart.py >> /home/nihliphobe/.config/herbstluftwm/log.txt
