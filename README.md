@@ -4,4 +4,7 @@
 + Vim          - Editor
   * Vim Plug   - Plugin Manager
 + Tmux         - Terminal Emulator
+  * TPM        - Plugin Manager
+    * tmux sensible
+    * tmux yank
 
