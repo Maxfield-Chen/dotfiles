@@ -24,7 +24,7 @@ with herbstluft.HerbstluftChain() as hc:
     hc.keybind(mod+shift+'r','reload')
     hc.keybind(mod+shift+'e','quit')
     hc.keybind(mod+enter,'spawn urxvt')
-    hc.keybind(mod+'d','spawn dmenu_run')
+    hc.keybind(mod+"d",'spawn dmenu_run')
 
     #hc.keybind('XF86AudioRaiseVolume','spawn amixer -q set Master 5%+')
     #hc.keybind('XF86AudioLowerVolume','spawn amixer -q set Master 5%-')
@@ -63,12 +63,14 @@ with herbstluft.HerbstluftChain() as hc:
     hc.keybind(mod+'f','fullscreen toggle')
     hc.keybind(mod+'p','pseudotile toggle')
 
-    hc.keybind(mod+tab,'cycle_all +1')
+    #hc.keybind(mod+tab,'cycle_all +1')
     hc.keybind(mod+shift+tab,'cycle_all -1')
     hc.keybind(mod+'c','cycle')
     hc.keybind(mod+'i','jumpto urgent')
 
-    #skipping the tag stuff starting at line 86 of the autostart.sh
+    #Tag stuff
+    hc.keybind(mod+tab, 'use_previous')
+
     for i in range(1,10):
         hc.add(str(i))
         hc.keybind(mod+str(i),'use_index '+str(i-1))
@@ -80,14 +82,12 @@ with herbstluft.HerbstluftChain() as hc:
     hc.merge_tag('default','1')
 
     #skipping the mouse stuff from line 98 in autostart.sh
-    #i don't really get how the mouse works tbh, so just leave it out
     hc.mouseunbind('all')
 
     #reset floating and tiling themes
     hc.attr(path='theme.tiling.reset',new_value='1')
     hc.attr(path='theme.floating.reset',new_value='1')
 
-    #okay now the theme
     hc.set('frame_bg_transparent',1)
     hc.set('frame_transparent_width',1)
     hc.attr(path='theme.background_color',new_value='#1e1e27')

@@ -1,6 +1,30 @@
 set nocompatible              " be iMproved, required
 filetype off                  " required
 
+" -----------------------------------------------------------
+" Vim-Plug
+" Specify a directory for plugins
+" - Avoid using standard Vim directory names like 'plugin'
+call plug#begin('~/.vim/plugged')
+
+" Make sure you use single quotes
+Plug 'tommcdo/vim-lion'
+let g:lion_squeeze_spaces = 1
+Plug 'wellle/targets.vim'
+Plug 'michaeljsmith/vim-indent-object'
+Plug 'rhysd/clever-f.vim'
+let g:clever_f_across_no_line = 1
+let g:clever_f_timeout_ms = 2000
+Plug 'ervandew/supertab'
+let g:SuperTabDefaultCompletionType = "context"
+let g:SuperTabContextDefaultCompletionType = "<c-n>"
+Plug 'sheerun/vim-polyglot'
+Plug 'tpope/vim-abolish'
+Plug 'tpope/vim-commentary'
+Plug 'tpope/vim-endwise'
+Plug 'tpope/vim-surround'
+call plug#end()
+
 "------------------------------------------------------------
 " Features {{{1
 "
@@ -196,8 +220,8 @@ set tabstop=2
 let g:move_key_modifier = 'C'
 
 "------------------------------------------------------------
-" Auto Reloading
-augroup reload_vimrc " {
-    autocmd!
-  augroup END " }
-    autocmd BufWritePost $MYVIMRC source $MYVIMRC
+"Auto Reloading
+ augroup reload_vimrc " {
+     autocmd!
+   augroup END " }
+     autocmd BufWritePost $MYVIMRC source $MYVIMRC
