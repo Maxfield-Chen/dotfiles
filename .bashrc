@@ -22,7 +22,6 @@ shopt -s checkwinsize
 
 # Enable history appending instead of overwriting.
 shopt -s histappend
-. /usr/local/bin/base16-eighties.dark
 case ${TERM} in
         xterm-termite|xterm*|rxvt*|Eterm|aterm|kterm|gnome*)
                 PROMPT_COMMAND=${PROMPT_COMMAND:+$PROMPT_COMMAND; }'printf "\033]0;%s@%s:%s\007" "${USER}" "${HOSTNAME%%.*}" "${PWD/#$HOME/~}"'

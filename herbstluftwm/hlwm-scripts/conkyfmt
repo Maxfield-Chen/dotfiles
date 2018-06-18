@@ -1,0 +1,117 @@
+#!/usr/bin/python2
+import sys
+from collections import deque
+
+from utils import make_segment, import_config_from_env
+
+
+config = import_config_from_env(conky_tag_font='', panel_height=20)
+
+
+class Gauge(object):
+    """
+    A simple bar representing a percentage number.
+    """
+    def __init__(self, height_ratio, width, fg1='#ffffff', fg2='#888888'):
+        self.height = int(round(config['panel_height'] * height_ratio))
+        self.width = width
+        self.fg1 = fg1
+        self.fg2 = fg2
+
+    def format(self, value):
+        value = int(value)
+        width1 = int(round(self.width * (value / 100.0)))
+        width2 = self.width - width1
+        return '^fg({fg1})^r({w1}x{h})'\
+               '^fg({fg2})^r({w2}x{h})'\
+               '^fg()'.format(h=self.height,
+                              fg1=self.fg1, w1=width1,
+                              fg2=self.fg2, w2=width2)
+
+
+class Graph(object):
+    """
+    A history graph, or "timeline", that plots a percentage over the course of
+    past :npoll time points.
+    """
+    def __init__(self, height_ratio, width, npoll, dynamic_upper=False,
+            upper=100, fg='#eeeeee'):
+        self.height = int(round(config['panel_height'] * height_ratio))
+        self.width = width
+        self.npoll = npoll
+        self.dynamic_upper = dynamic_upper
+        self.upper = upper if not dynamic_upper else 0
+        self.fg = fg
+        self._polls = deque([0] * npoll, maxlen=npoll)
+
+    def format(self, value):
+        value = int(value)
+        self._polls.append(value)
+        if self.dynamic_upper:
+            self.upper = max(self.upper, value)
+
+        parts = [
+            '^p(;0)',
+            '^fg({fg})'.format(fg=self.fg),
+        ]
+
+        for p in self._polls:
+            try:
+                ratio = float(p) / self.upper
+            except ZeroDivisionError:
+                ratio = 0
+            h = int(round(self.height * ratio))
+            parts.append('^r({w}x{h})'.format(w=self.width, h=h))
+
+        parts.extend([
+            '^fg()',
+            '^p()',
+        ])
+        return ''.join(parts)
+
+
+def tag(fmt):
+    return make_segment(fmt, fn=config['conky_tag_font'])
+
+formatters = [
+    # 'conky'
+    ['{0}\t'],
+    # battery
+    [tag('{0:>3}%B '),
+        Gauge(height_ratio=0.5, width=32, fg1='#cccc00'),
+        ' '],
+    # memory
+    [tag('{0:>2}%M '),
+        Gauge(height_ratio=0.5, width=32, fg1='#cc00cc'),
+        ' '],
+    # CPU
+    [tag('{0:>3}%CPU '), '^p(;2)',
+        Graph(height_ratio=0.7, width=2, npoll=32, fg='#98FB98'),
+        '^p() '],
+]
+
+
+def main():
+    while True:
+        line = sys.stdin.readline()
+        if not line:
+            break
+
+        fields = line.strip().split('\t')
+
+        n = min(len(fields), len(formatters))
+        if len(fields) != len(formatters):
+            sys.stderr.write('Warning: expect {nfmt} fields, got {nf}\n'
+                             ''.format(nfmt=len(formatters), nf=len(fields)))
+
+        try:
+            for i in xrange(n):
+                for f in formatters[i]:
+                    sys.stdout.write(f.format(fields[i]))
+            sys.stdout.write('\n')
+        except IOError:  # likely just broken pipe
+            break
+
+
+if __name__ == '__main__':
+    main()

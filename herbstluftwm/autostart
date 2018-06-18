@@ -2,10 +2,7 @@
 
 # Setup wallpaper
 
-feh --bg-scale /home/nihliphobe/images/summit_wp.jpg
-
-python /home/nihliphobe/.config/herbstluftwm/autostart.py >> /home/nihliphobe/.config/herbstluftwm/log.txt
-
 # Murder the bell. END IT
+xset b off
+python /root/.config/herbstluftwm/autostart.py >> /root/.config/herbstluftwm/log.txt
 
-set bell-style visible

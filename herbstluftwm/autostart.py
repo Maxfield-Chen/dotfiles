@@ -6,6 +6,7 @@ import subprocess
 
 with herbstluft.HerbstluftChain() as hc:
     #we want super as our mod. mod1 would give us the alt key
+    alt=herbstluft.mod1
     mod=herbstluft.mod4
     shift=herbstluft.shift
     enter=herbstluft.enter
@@ -69,7 +70,7 @@ with herbstluft.HerbstluftChain() as hc:
     hc.keybind(mod+'i','jumpto urgent')
 
     #Tag stuff
-    hc.keybind(mod+tab, 'use_previous')
+    hc.keybind(alt+tab, 'use_previous')
 
     for i in range(1,10):
         hc.add(str(i))
@@ -139,7 +140,7 @@ with herbstluft.HerbstluftChain() as hc:
     hc.set('tree_style','╾│ ├└╼─┐')
 
 #Setup panel
-subprocess.call(['bash','/home/nihliphobe/.config/herbstluftwm/hlwm-scripts/panels'])
+subprocess.call(['bash','/root/.config/herbstluftwm/hlwm-scripts/panels'])
 #subprocess.call(['xset','-dpms','s','off'])
 #subprocess.call(['xrdb','.Xresources'])
 #subprocess.call(['xhost','+local:'])
