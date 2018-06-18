@@ -1,30 +1,6 @@
 set nocompatible              " be iMproved, required
 filetype off                  " required
 
-" -----------------------------------------------------------
-" Vim-Plug
-" Specify a directory for plugins
-" - Avoid using standard Vim directory names like 'plugin'
-call plug#begin('~/.vim/plugged')
-
-" Make sure you use single quotes
-Plug 'tommcdo/vim-lion'
-let g:lion_squeeze_spaces = 1
-Plug 'wellle/targets.vim'
-Plug 'michaeljsmith/vim-indent-object'
-Plug 'rhysd/clever-f.vim'
-let g:clever_f_across_no_line = 1
-let g:clever_f_timeout_ms = 2000
-Plug 'ervandew/supertab'
-let g:SuperTabDefaultCompletionType = "context"
-let g:SuperTabContextDefaultCompletionType = "<c-n>"
-Plug 'sheerun/vim-polyglot'
-Plug 'tpope/vim-abolish'
-Plug 'tpope/vim-commentary'
-Plug 'tpope/vim-endwise'
-Plug 'tpope/vim-surround'
-call plug#end()
-
 "------------------------------------------------------------
 " Features {{{1
 "
@@ -38,7 +14,6 @@ set nocompatible
 " Attempt to determine the type of a file based on its name and possibly its
 " contents. Use this to allow intelligent auto-indenting for each filetype,
 " and for plugins that are filetype specific.
-filetype indent plugin on
 
 " Enable syntax highlighting
 syntax enable
@@ -200,7 +175,7 @@ nnoremap <C-l> :nohl<CR><C-L>
 
 "I just prefer c-t instead of c-w to move between splits
 nnoremap <C-a> <C-W>
-" now jk will pop me out of insert mode, essential 
+" now jk will pop me out of insert mode, essential
 :imap jk <Esc>
 
 " This lets control v paste from clip board and Control c copy to clip board
@@ -220,8 +195,150 @@ set tabstop=2
 let g:move_key_modifier = 'C'
 
 "------------------------------------------------------------
-"Auto Reloading
- augroup reload_vimrc " {
-     autocmd!
-   augroup END " }
-     autocmd BufWritePost $MYVIMRC source $MYVIMRC
+
+let syntastic_enable_racket_racket_checker=1
+
+"------------------------------------------------------------
+" Begin Vundle Config
+"------------------------------------------------------------
+set nocompatible              " be iMproved, required
+filetype off                  " required
+
+" set the runtime path to include Vundle and initialize
+set rtp+=~/.vim/bundle/Vundle.vim
+call vundle#begin()
+
+" let Vundle manage Vundle, required
+Plugin 'VundleVim/Vundle.vim'
+
+"Racket Support
+Plugin 'wlangstroth/vim-racket'
+
+"Align w/ vim lion
+Plugin 'tommcdo/vim-lion'
+
+" You Complete Me: Autocomplete
+Plugin 'Valloric/YouCompleteMe'
+
+" Zenburn Colorscheme
+Plugin 'jnurmine/zenburn'
+
+" CTRLP Fuzzy File Finding
+Plugin 'ctrlpvim/ctrlp.vim'
+
+" LightLine
+Plugin 'itchyny/lightline.vim'
+
+" Nerd Commenter
+Plugin 'scrooloose/nerdcommenter'
+
+" Easy Rename Current File
+Plugin 'danro/rename.vim'
+
+" Vim Fugitive: Git helper
+Plugin 'tpope/vim-fugitive'
+
+" Syntastic: Syntax Hacks
+Plugin 'vim-syntastic/syntastic'
+
+" Surround
+Plugin 'tpope/vim-surround'
+
+" Repeat
+Plugin 'tpope/vim-repeat'
+
+" Fireplace + Classpath
+Plugin 'tpope/vim-fireplace'
+Plugin 'tpope/vim-classpath'
+
+" Sexp
+Plugin 'guns/vim-sexp'
+Plugin 'tpope/vim-sexp-mappings-for-regular-people'
+
+" Rust Syntastic Integration
+Plugin 'rust-lang/rust.vim'
+
+" All Code Indentation helper
+Plugin 'Chiel92/vim-autoformat'
+
+
+call vundle#end()            " required
+filetype plugin indent on    " required
+"To ignore plugin indent changes, instead use:
+"filetype plugin on
+"
+" Brief help
+" :PluginList       - lists configured plugins
+" :PluginInstall    - installs plugins; append `!` to update or just
+" :PluginUpdate
+" :PluginSearch foo - searches for foo; append `!` to refresh local cache
+" :PluginClean      - confirms removal of unused plugins; append `!` to
+" auto-approve removal
+"
+" see :h vundle for more details or wiki for FAQ
+" Put your non-Plugin stuff after this line
+
+"------------------------------------------------------------
+" End Vundle Config
+"------------------------------------------------------------
+
+"------------------------------------------------------------
+" Begin AutoIndent Config
+"------------------------------------------------------------
+noremap <F3> :Autoformat<CR>
+"------------------------------------------------------------
+" Begin AutoIndent Config
+"------------------------------------------------------------
+
+"------------------------------------------------------------
+" Begin Rust Config
+"------------------------------------------------------------
+"let g:rustfmt_autosave = 1
+let g:syntastic_rust_checkers=['cargo']
+" Syntastic gets slow, make error checking opt in.
+let g:syntastic_mode_map = { 'mode': 'passive', 'active_filetypes': [],'passive_filetypes': [] }
+
+" Enable cargo checker for lalrpop files
+autocmd BufNewFile,BufRead *.lalrpop set filetype=rust
+"------------------------------------------------------------
+" End Rust Config
+"------------------------------------------------------------
+
+
+"------------------------------------------------------------
+" Begin Color Scheme Config
+"------------------------------------------------------------
+colors zenburn
+"------------------------------------------------------------
+" End Color Scheme Config
+"------------------------------------------------------------
+
+"------------------------------------------------------------
+" Begin Syntastic Config
+"------------------------------------------------------------
+set statusline+=%#warningmsg#
+set statusline+=%{SyntasticStatuslineFlag()}
+set statusline+=%*
+
+let g:syntastic_always_populate_loc_list = 1
+let g:syntastic_auto_loc_list = 1
+let g:syntastic_check_on_open = 1
+let g:syntastic_check_on_wq = 0
+
+" Close Syntastic Errors and Warnings
+nnoremap <Leader>l :SyntasticReset<CR>
+
+" check for errors
+nnoremap <leader>e :SyntasticCheck<CR> 
+"------------------------------------------------------------
+" End Syntastic Config
+"------------------------------------------------------------
+"------------------------------------------------------------
+
+"------------------------------------------------------------
+" Begin Sexp Config
+"------------------------------------------------------------
+let g:sexp_enable_insert_mode_mappings = 0
+"------------------------------------------------------------
+" End Sexp Config
+"------------------------------------------------------------
