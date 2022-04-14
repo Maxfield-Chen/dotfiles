@@ -94,3 +94,61 @@ unset safe_term match_lhs
 # Try to enable the "Command not found" hook ("pacman -S pkgfile" to install it).
 # See also: https://wiki.archlinux.org/index.php/Bash#The_.22command_not_found.22_hook
 [ -r /usr/share/doc/pkgfile/command-not-found.bash ] && . /usr/share/doc/pkgfile/command-not-found.bash
+
+
+setxkbmap -option ctrl:nocaps
+setxkbmap -option ctrl:lctrl_lalt
+alias cc='setxkbmap -option ctrl:nocaps'
+alias sivpn='lpass show jumpcloud.com -c --password; sudo openvpn --config ~/openvpn_config/client.ovpn'
+alias t0='tmux -2 new-session -t 0'
+alias armvm='sudo qemu-system-arm -kernel ~/projects/arm-exploits/rpi_vm/qemu-rpi-kernel/kernel-qemu-4.4.34-jessie -cpu arm1176 -m 256 -M versatilepb -serial stdio -append "root=/dev/sda2 rootfstype=ext4 rw" -hda ~/projects/arm-exploits/rpi_vm/2017-04-10-raspbian-jessie/raspbian.img -net nic -net tap,ifname=tap0,script=no,downscript=no -no-reboot'
+alias armvm_o='sudo qemu-system-arm -kernel ~/projects/arm-exploits/rpi_vm/qemu-rpi-kernel/kernel-qemu-4.4.34-jessie -cpu arm1176 -m 256 -M versatilepb -serial stdio -append "root=/dev/sda2 rootfstype=ext4 rw" -hda ~/projects/arm-exploits/rpi_vm/2017-04-10-raspbian-jessie/raspbian.img -netdev tap,id=mynet0,ifname=tap0,script=no,downscript=no -device e1000,netdev=mynet0,mac=52:55:00:d1:55:01 -no-reboot'
+xrdb ~/.Xdefaults
+alias logping='screen sudo tcpdump -i eth0 icmp and icmp[icmptype]=icmp-echo'
+alias ls='ls --color=auto'
+alias vpndns='sudo cp /etc/resolv-vpn.conf /etc/resolv.conf && sudo systemctl restart network-manager'
+alias nodns='sudo cp /etc/no-vpn-resolv.conf /etc/resolv.conf && sudo systemctl restart network-manager'
+set LEIN_USE_BOOTCLASSPATH=no
+
+sr () {
+  input="'$*'"
+  nohup "$input" &
+}
+
+alias btr='sudo /etc/init.d/bluetooth restart'
+alias bts='sudo /etc/init.d/bluetooth start'
+alias btk='sudo /etc/init.d/bluetooth stop'
+alias websync='rsync -av /home/nihliphobe/projects/haskell/maxfieldchen-com/_site/ nginx@maxfieldchen.com:/var/www/maxfieldchen.com/ --delete'
+alias webbuild='cd /home/nihliphobe/projects/haskell/maxfieldchen-com && nix-shell --run "cabal run site build"'
+alias plover='source /home/nihliphobe/tools/plover/plover/bin/activate && /home/nihliphobe/tools/plover/launch.sh > /dev/null 2>&1 &'
+alias monitor_setup='xrandr --auto --output DP-0 --right-of DP-1 --output eDP-1-1 --off'
+export LD_PRELOAD=/usr/lib/x86_64-linux-gnu/libgtk3-nocsd.so.0
+alias chalssh='ssh -i ~/.ssh/SecurityInnovation_User5.pem -oServerAliveInterval=10 ubuntu@52.70.104.199'
+alias homeon='xrandr --output DP-3.1 --auto; xrandr --output eDP-1-1 --off; xrandr --output DP-3.2 --auto; xrandr --output DP-3.3 --auto; xrandr --output DP-3.3 --left-of DP-3.2; xrandr --output DP-3.1 --right-of DP-3.2; xrandr --output DP-3.1 --rotate left;'
+alias workon='xrandr --output eDP-1-1 --off --output DP-3.1 --auto'
+alias lapon='xrandr --output eDP-1-1 --auto --output DP-3.1 --off && xrandr -s 0'
+# Base16 Shell
+BASE16_SHELL="$HOME/.config/base16-shell/"
+[ -n "$PS1" ] && \
+    [ -s "$BASE16_SHELL/profile_helper.sh" ] && \
+        eval "$("$BASE16_SHELL/profile_helper.sh")"
+
+export PATH="/home/nihliphobe/.pyenv/bin:$PATH"
+export PATH="/home/nihliphobe/.stack/programs/x86_64-linux/ghc-8.10.7/bin/:$PATH"
+eval "$(pyenv init -)"
+eval "$(pyenv virtualenv-init -)"
+alias blueconnect="echo 'connect 94:DB:56:18:CA:D5' | bluetoothctl"
+alias bluedisconnect="echo 'disconnect 94:DB:56:18:CA:D5' | bluetoothctl"
+alias hack-the-box="sudo openvpn /home/nihliphobe/projects/hack-the-box/configure/lab_drydryserial.ovpn"
+. "$HOME/.cargo/env"
+
+eval "$(starship init bash)"
+
+export NVM_DIR="$HOME/.nvm"
+[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
+[ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
+
+complete -C /usr/bin/terraform terraform
+
+# Add RVM to PATH for scripting. Make sure this is the last PATH variable change.
+export PATH="$PATH:$HOME/.rvm/bin"
